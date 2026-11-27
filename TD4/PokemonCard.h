@@ -22,6 +22,7 @@ class PokemonCard : public Card{
         int getHP();
         void heal();
         void takeDamage(int);
+        void attachEnergy();
 };
 
 #endif
