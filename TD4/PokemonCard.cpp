@@ -47,3 +47,9 @@ void PokemonCard::heal(){
 void PokemonCard::takeDamage(int damage){
     HP -= damage;
 }
+
+void PokemonCard::attachEnergy(){
+    for (int i = 0; i < attacks.size(); i++){
+        get<1>(attacks[i]) += 1;
+    }
+}
