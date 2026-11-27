@@ -39,6 +39,8 @@ void Player::attachEnergyCard(int energyId, int pokemonId){
     Card* card = benchCards[energyId];
     EnergyCard* energy = dynamic_cast<EnergyCard*>(card);
 
+    pokemon->attachEnergy();
+
     PokemonCard* pokemon = actionCards[pokemonId];
     
     string type = energy->getType();
@@ -61,31 +63,37 @@ void Player::attack(int pAttId, int pDefId, Player other, int attackId){
     PokemonCard* pDef = other.getActionCards()[pDefId];
     tuple<int, int, string, int> attack = pAtt->getAttacks()[attackId];
     int damage = get<3>(attack);
+    
+    if(get<1>(attack) >= get<0>(attack)){
 
-    cout << playerName;
-    cout << " attacking ";
-    cout << other.getName();
-    cout << "'s Pokemon ";
-    cout << pDef->getName();
-    cout << " with the Pokemon ";
-    cout << pAtt->getName();
-    cout << " with its attack : ";
-    cout << get<2>(attack) << endl;
-    cout << "Reducing ";
-    cout << to_string(damage);
-    cout << " from ";
-    cout << other.getName();
-    cout << "'s Pokemon's HP" << endl;
+        cout << playerName;
+        cout << " attacking ";
+        cout << other.getName();
+        cout << "'s Pokemon ";
+        cout << pDef->getName();
+        cout << " with the Pokemon ";
+        cout << pAtt->getName();
+        cout << " with its attack : ";
+        cout << get<2>(attack) << endl;
+        cout << "Reducing ";
+        cout << to_string(damage);
+        cout << " from ";
+        cout << other.getName();
+        cout << "'s Pokemon's HP" << endl;
 
-    pDef->takeDamage(damage);
-    cout << "Pokemon ";
-    cout << pDef->getName();
-    if(pDef->getHP() <= 0){
-        other.killPokemon(pDefId);
-        cout <<" is KO" << endl;
+        pDef->takeDamage(damage);
+        cout << "Pokemon ";
+        cout << pDef->getName();
+        if(pDef->getHP() <= 0){
+            other.killPokemon(pDefId);
+            cout <<" is KO" << endl;
+        }
+        else{
+            cout <<" is still alive" << endl;
+        }
     }
     else{
-        cout <<" is still alive" << endl;
+        cout << "You do not have enough energy" << endl;
     }
 }
 
